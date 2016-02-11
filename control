@@ -1,0 +1,9 @@
+Package: com.dopeteam.tailornotail
+Name: Tailornotail
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: dopeteam
+Author: dopeteam
+Section: Tweaks
