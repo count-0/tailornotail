@@ -6,7 +6,7 @@ tails_INSTALL_PATH = /Library/PreferenceBundles
 tails_FRAMEWORKS = UIKit
 tails_LIBRARIES = colorpicker
 tails_PRIVATE_FRAMEWORKS = Preferences
-tails_EXTRA_FRAMEWORKS += CepheiPrefs
+tails_EXTRA_FRAMEWORKS += CepheiPrefs Cephei
 
 include $(THEOS_MAKE_PATH)/bundle.mk
 

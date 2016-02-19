@@ -1,6 +1,4 @@
 #include "tailsBubbleListController.h"
-#import <CepheiPrefs/HBSupportController.h>
-#import <libcolorpicker.h>
 
 @implementation tailsBubbleListController
 

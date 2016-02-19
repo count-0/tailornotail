@@ -4,76 +4,32 @@
 <dict>
 	<key>items</key>
 	<array>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Settings</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>com.dopeteam.tailornotail</string>
-			<key>key</key>
-			<string>EnableTails</string>
-			<key>label</key>
-			<string>Show message tails</string>
-			<key>PostNotification</key>
-			<string>com.dopeteam.tailornotail/ReloadPrefs</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Bubble gradient</string>
-		</dict>
-		<dict>
+        <dict>
             <key>cell</key>
             <string>PSLinkCell</string>
-            <key>cellClass</key>
-            <string>PFSimpleLiteColorCell</string>
-            <key>libcolorpicker</key>
-            <dict>
-                <key>defaults</key>
-				<string>com.dopeteam.tailornotail</string>
-                <key>key</key>
-                <string>TopColor</string>
-                <key>fallback</key>
-                <string>#999999</string>
-                <key>alpha</key>
-                <true/>
-                <key>PostNotification</key>
-				<string>com.dopeteam.tailornotail/ReloadPrefs</string>
-            </dict>
             <key>label</key>
-            <string>Top Color</string>
+            <string>Default Bubble Theme</string>
+            <key>detail</key>
+            <string>tailsdBubbleListController</string>
         </dict>
         <dict>
             <key>cell</key>
             <string>PSLinkCell</string>
-            <key>cellClass</key>
-            <string>PFSimpleLiteColorCell</string>
-            <key>libcolorpicker</key>
-            <dict>
-                <key>defaults</key>
-				<string>com.dopeteam.tailornotail</string>
-                <key>key</key>
-                <string>BotColor</string>
-                <key>fallback</key>
-                <string>#999999</string>
-                <key>alpha</key>
-                <true/>
-                <key>PostNotification</key>
-				<string>com.dopeteam.tailornotail/ReloadPrefs</string>
-            </dict>
             <key>label</key>
-            <string>Bottom Color</string>
+            <string>iMessage Bubble Theme</string>
+            <key>detail</key>
+            <string>tailsiBubbleListController</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSLinkCell</string>
+            <key>label</key>
+            <string>SMS Bubble Theme</string>
+            <key>detail</key>
+            <string>tailssBubbleListController</string>
         </dict>
 	</array>
 	<key>title</key>
-	<string>Chat Bubble Settings</string>
+	<string>Bubbles</string>
 </dict>
 </plist>
