@@ -40,12 +40,22 @@
 
 static bool isSMS;
 static bool fromMoi;
+static NSString *const kTNTTopColor = @"TopColor";
+static NSString *const kTNTBotColor = @"BotColor";
+static NSString *const kTNTSender = @"sender";
+static NSString *const kTNTReceived = @"received";
 
 %hook CKBalloonView
 -(BOOL)hasTail
 {
-	if([TNTPreferencesManager sharedInstance].enabled)
-		return [TNTPreferencesManager sharedInstance].enableTails;
+	if([TNTPreferencesManager sharedInstance].enabled){
+		if ([TNTPreferencesManager sharedInstance].imessageEnable && !isSMS)
+			return [TNTPreferencesManager sharedInstance].enableiMessageTails;
+		else if ([TNTPreferencesManager sharedInstance].smsEnable && isSMS)
+			return [TNTPreferencesManager sharedInstance].enablesmsTails;
+		else
+			return [TNTPreferencesManager sharedInstance].enableTails;
+	}
 	else
 		return %orig;
 }
@@ -62,7 +72,7 @@ static bool fromMoi;
 -(void)configureForChatItem:(id)arg1
 {
 	CKChatItem *chatItem = arg1;
-	HBLogDebug(@"Item: %@, %d", [[[chatItem IMChatItem] _item] service], (int)[[[chatItem IMChatItem] _item] isFromMe])
+	//HBLogDebug(@"Item: %@, %d", [[[chatItem IMChatItem] _item] service], (int)[[[chatItem IMChatItem] _item] isFromMe])
 	if([[[[chatItem IMChatItem] _item] service] isEqualToString:@"SMS"])
 		isSMS = true;
 	else
@@ -93,11 +103,11 @@ static bool fromMoi;
 %hook CKColoredBalloonView
 
 -(BOOL) color {
-	HBLogDebug(@"Called Color, %d", (int) isSMS)
-	if([TNTPreferencesManager sharedInstance].enabled && !isSMS && fromMoi)
+	//HBLogDebug(@"Called Color, %d", (int) isSMS)
+	if([TNTPreferencesManager sharedInstance].enabled)
 		return true;
 	else
-		return false;
+		return %orig;
 }
 
 %end
@@ -106,15 +116,30 @@ static bool fromMoi;
 
 -(id)colors
 {
-	HBLogDebug(@"Called Colors, %d", (int) isSMS)
-	if([TNTPreferencesManager sharedInstance].enabled && !isSMS && fromMoi){
+	TNTPreferencesManager *pref = [TNTPreferencesManager sharedInstance];
+	//HBLogDebug(@"Called Colors, %d", (int) isSMS)
+	NSDictionary *dictionary;
+	if(pref.enabled){
+		if(pref.imessageEnable && !isSMS)
+			dictionary = [pref getPrefDictionary:@"imessage"];
+		else if(pref.smsEnable && isSMS)
+			dictionary = [pref getPrefDictionary:@"sms"];
+		else
+			dictionary = [pref getPrefDictionary:@"default"];
+		
 		NSMutableArray *arrays = [NSMutableArray array];
-		[arrays addObject:[[TNTPreferencesManager sharedInstance] colorForPreference:@"BotColor"]];
-		[arrays addObject:[[TNTPreferencesManager sharedInstance] colorForPreference:@"TopColor"]];
+		if(fromMoi)
+		{
+			[arrays addObject:dictionary[[NSString stringWithFormat:@"%@-%@", kTNTSender, kTNTBotColor]]];
+			[arrays addObject:dictionary[[NSString stringWithFormat:@"%@-%@", kTNTSender, kTNTTopColor]]];
+		}
+		else
+		{
+			[arrays addObject:dictionary[[NSString stringWithFormat:@"%@-%@", kTNTReceived, kTNTBotColor]]];
+			[arrays addObject:dictionary[[NSString stringWithFormat:@"%@-%@", kTNTReceived, kTNTTopColor]]];
+		}
 		return arrays;
 	}
-	else if(!fromMoi)
-		return %orig;
 	else
 		return %orig;
 }

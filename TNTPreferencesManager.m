@@ -3,6 +3,14 @@
 
 static NSString *const kTNTEnabledKey = @"EnableTweak";
 static NSString *const kTNTTailsKey = @"EnableTails";
+static NSString *const kTNTTailsiMessageKey = @"imessage-EnableTails";
+static NSString *const kTNTTailsSMSKey = @"sms-EnableTails";
+static NSString *const kTNTSMSEnable = @"sms-Enable";
+static NSString *const kTNTiMessageEnable = @"imessage-Enable";
+static NSString *const kTNTTopColor = @"TopColor";
+static NSString *const kTNTBotColor = @"BotColor";
+static NSString *const kTNTSender = @"sender";
+static NSString *const kTNTReceived = @"received";
 
 
 @implementation TNTPreferencesManager {
@@ -15,7 +23,6 @@ static NSString *const kTNTTailsKey = @"EnableTails";
 	dispatch_once(&onceToken, ^{
 		sharedInstance = [[self alloc] init];
 	});
-
 	return sharedInstance;
 }
 
@@ -25,6 +32,10 @@ static NSString *const kTNTTailsKey = @"EnableTails";
 	//BOOL Preferences
 	[_preferences registerBool:&_enabled default:YES forKey:kTNTEnabledKey];
 	[_preferences registerBool:&_enableTails default:YES forKey:kTNTTailsKey];
+	[_preferences registerBool:&_enableiMessageTails default:YES forKey:kTNTTailsiMessageKey];
+	[_preferences registerBool:&_enablesmsTails default:YES forKey:kTNTTailsSMSKey];
+	[_preferences registerBool:&_smsEnable default:YES forKey:kTNTSMSEnable];
+	[_preferences registerBool:&_imessageEnable default:YES forKey:kTNTiMessageEnable];
 	//HBLogDebug(@"%@ %@", _botColor, _topColor);
 	}
 	return self;
@@ -38,6 +49,21 @@ static NSString *const kTNTTailsKey = @"EnableTails";
 	}
 	return [UIColor clearColor];
 }
+-(NSDictionary *)getPrefDictionary:(NSString *)section
+{
+	UIColor *tSC, *bSC, *tRC, *bRC;
+	NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+	tSC = [self colorForPreference:[NSString stringWithFormat:@"%@-%@-%@",section,kTNTSender,kTNTTopColor]];
+	bSC = [self colorForPreference:[NSString stringWithFormat:@"%@-%@-%@",section,kTNTSender,kTNTBotColor]];
+	tRC = [self colorForPreference:[NSString stringWithFormat:@"%@-%@-%@",section,kTNTReceived,kTNTTopColor]];
+	bRC = [self colorForPreference:[NSString stringWithFormat:@"%@-%@-%@",section,kTNTReceived,kTNTBotColor]];
+	[dictionary setObject:tSC forKey:[NSString stringWithFormat:@"%@-%@", kTNTSender, kTNTTopColor]];
+	[dictionary setObject:bSC forKey:[NSString stringWithFormat:@"%@-%@", kTNTSender, kTNTBotColor]];
+	[dictionary setObject:tRC forKey:[NSString stringWithFormat:@"%@-%@", kTNTReceived, kTNTTopColor]];
+	[dictionary setObject:bRC forKey:[NSString stringWithFormat:@"%@-%@", kTNTReceived, kTNTBotColor]];
+	return dictionary;
+}
+
 
 #pragma mark - Memory management
 

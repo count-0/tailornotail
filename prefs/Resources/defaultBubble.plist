@@ -4,26 +4,6 @@
 <dict>
     <key>items</key>
     <array>
-        <dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Settings</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<true/>
-			<key>defaults</key>
-			<string>com.dopeteam.tailornotail</string>
-			<key>key</key>
-			<string>default-Enable</string>
-			<key>label</key>
-			<string>Enable default theming</string>
-			<key>PostNotification</key>
-			<string>com.dopeteam.tailornotail/ReloadPrefs</string>
-		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
