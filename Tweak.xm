@@ -34,9 +34,15 @@
 @interface IMTranscriptChatItem : IMChatItem
 @end
 
+@interface CKTranscriptCollectionView : UIView
+-(void)setBackgroundView:(UIView *)arg1;
+@end
+
 @interface CKChatItem : NSObject
 @property (nonatomic, retain) IMTranscriptChatItem *IMChatItem;
 @end
+
+@import Photos;
 
 static bool isSMS;
 static bool fromMoi;
@@ -59,6 +65,11 @@ static NSString *const kTNTReceived = @"received";
 	else
 		return %orig;
 }
+-(BOOL) canUseOpaqueMask
+{
+	return FALSE;
+}
+
 -(unsigned int) balloonCorners
 {
 	return %orig;
@@ -88,14 +99,28 @@ static NSString *const kTNTReceived = @"received";
 
 -(NSConcreteAttributedString *)attributedText
 {
-	NSConcreteAttributedString *test = %orig;
-	//NSMutableArray *array = [test attributesAtIndex:0 effectiveRange:nil];
-	//HBLogDebug(@"Test: %@", );
-	NSMutableDictionary *m = [[test attributesAtIndex:0 effectiveRange:nil] mutableCopy];
-	m[@"NSColor"] = [UIColor whiteColor];
+	TNTPreferencesManager *pref = [TNTPreferencesManager sharedInstance];
+	if(pref.enabled){
+		NSConcreteAttributedString *originalText = %orig;
+		NSMutableDictionary *mDict = [[originalText attributesAtIndex:0 effectiveRange:nil] mutableCopy];
+		NSDictionary *fontColorDict;
+		if(pref.imessageEnable && !isSMS)
+			fontColorDict = [pref getFontDictionary:@"imessage"];
+		else if(pref.smsEnable && isSMS)
+			fontColorDict = [pref getFontDictionary:@"sms"];
+		else
+			fontColorDict = [pref getFontDictionary:@"default"];
+		if(fromMoi)
+			mDict[@"NSColor"] = fontColorDict[@"sender"];
+		else
+			mDict[@"NSColor"] = fontColorDict[@"received"];
 
-	NSConcreteAttributedString *test2 = [[NSConcreteAttributedString alloc] initWithString:[test string] attributes:m];
-	return test2;
+		NSConcreteAttributedString *newText = [[NSConcreteAttributedString alloc] initWithString:[originalText string] attributes:mDict];
+		return newText;
+	}
+	else
+		return %orig;
+	
 }
 
 %end
@@ -121,11 +146,11 @@ static NSString *const kTNTReceived = @"received";
 	NSDictionary *dictionary;
 	if(pref.enabled){
 		if(pref.imessageEnable && !isSMS)
-			dictionary = [pref getPrefDictionary:@"imessage"];
+			dictionary = [pref getColorDictionary:@"imessage"];
 		else if(pref.smsEnable && isSMS)
-			dictionary = [pref getPrefDictionary:@"sms"];
+			dictionary = [pref getColorDictionary:@"sms"];
 		else
-			dictionary = [pref getPrefDictionary:@"default"];
+			dictionary = [pref getColorDictionary:@"default"];
 		
 		NSMutableArray *arrays = [NSMutableArray array];
 		if(fromMoi)
@@ -143,5 +168,43 @@ static NSString *const kTNTReceived = @"received";
 	else
 		return %orig;
 }
+
+%end
+
+%hook CKTranscriptCollectionView
+
+-(id) initWithFrame:(CGRect) arg1 collectionViewLayout:(id) arg2
+{
+	//self.backgroundColor = [UIColor blueColor];
+	self = %orig;
+	PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+	fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+	PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+	PHAsset *lastAsset = [fetchResult lastObject];
+	[[PHImageManager defaultManager] requestImageForAsset:lastAsset
+                                          targetSize:PHImageManagerMaximumSize
+                                         contentMode:PHImageContentModeDefault
+                                             options:0
+                                       resultHandler:^(UIImage *result, NSDictionary *info) {
+
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                            UIImageView *test = [[UIImageView alloc] initWithImage:result];
+                                            test.contentMode = UIViewContentModeScaleAspectFill;
+              								[self setBackgroundView:test];
+
+
+                                           });
+                                       }];
+	return self;
+}
+
+/*
+-(void)setBackgroundColor:(UIColor *)color
+{
+	color = [UIColor redColor];
+	%orig;
+}
+*/
+
 
 %end

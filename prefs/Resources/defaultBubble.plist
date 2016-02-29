@@ -43,8 +43,6 @@
             <string>default-sender-TopColor</string>
             <key>label</key>
             <string>Sender Top Color</string>
-            <key>default</key>
-            <string>#AAAAAA</string>
         </dict>
         <dict>
             <key>cell</key>
@@ -59,7 +57,23 @@
             <string>com.dopeteam.tailornotail/ReloadPrefs</string>
             <key>key</key>
             <string>default-sender-BotColor</string>
-        </dict>        
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSTableCell</string>
+            <key>cellClass</key>
+            <string>HBColorPickerCell</string>
+            <key>label</key>
+            <string>Font color</string>
+            <key>defaults</key>
+            <string>com.dopeteam.tailornotail</string>
+            <key>PostNotification</key>
+            <string>com.dopeteam.tailornotail/ReloadPrefs</string>
+            <key>key</key>
+            <string>default-sender-FontColor</string>
+            <key>default</key>
+            <string>#000000</string>
+        </dict>         
         <dict>
             <key>cell</key>
             <string>PSGroupCell</string>
@@ -94,6 +108,22 @@
             <key>label</key>
             <string>Received Bottom Color</string>
         </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSTableCell</string>
+            <key>cellClass</key>
+            <string>HBColorPickerCell</string>
+            <key>label</key>
+            <string>Font color</string>
+            <key>defaults</key>
+            <string>com.dopeteam.tailornotail</string>
+            <key>PostNotification</key>
+            <string>com.dopeteam.tailornotail/ReloadPrefs</string>
+            <key>key</key>
+            <string>default-received-FontColor</string>
+            <key>default</key>
+            <string>#000000</string>
+        </dict> 
     </array>
     <key>title</key>
     <string>Default</string>

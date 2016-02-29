@@ -10,6 +10,8 @@
 @property (nonatomic, readonly) BOOL enableiMessageTails;
 
 + (instancetype)sharedInstance;
-- (UIColor *)colorForPreference:(NSString *)string;
-- (NSDictionary *)getPrefDictionary:(NSString *)section;
+- (UIColor *)colorForPreference:(NSString *)string fallback:(NSString *)fallback;
+- (NSDictionary *)getColorDictionary:(NSString *)section;
+- (NSDictionary *)getFontDictionary:(NSString *)section;
+
 @end

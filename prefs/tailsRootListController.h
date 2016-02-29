@@ -2,6 +2,6 @@
 #import <MessageUI/MessageUI.h>
 
 @interface tailsRootListController : HBRootListController
-//-(void)setupHeader;
-//-(void)setupTitle;
+-(void)setupHeader;
+-(void)setupTitle;
 @end

@@ -2,7 +2,7 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Tailornotail
 Tailornotail_FILES = Tweak.xm TNTPreferencesManager.m
-Tailornotail_FRAMEWORKS = Foundation
+Tailornotail_FRAMEWORKS = Foundation Photos
 Tailornotail_PRIVATE_FRAMEWORKS = IMCore
 Tailornotail_LIBRARIES = colorpicker
 Tailornotail_EXTRA_FRAMEWORKS += Cephei

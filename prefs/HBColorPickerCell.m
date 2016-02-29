@@ -51,19 +51,21 @@
 		[_preferences registerObject:&_colorString default:@"#FFFFFF" forKey:[[self specifier] propertyForKey:@"key"]];
 	else
 		[_preferences registerObject:&_colorString default:[[self specifier] propertyForKey:@"default"] forKey:[[self specifier] propertyForKey:@"key"]];
-	if(!_colorString)
+	if(!_colorString){
     	HBLogError(@"Error getting color value from prefs, using fallback");
+    	_colorString = @"#FFFFFF";
+	}
+
   	_colorPreview = LCPParseColorString(_colorString, @"#FFFFFF");
 	HBLogDebug(@"libColorPickerAlert called : %@ , %@", _colorPreview, _colorString);
 	PFColorAlert *alert = [PFColorAlert colorAlertWithStartColor:_colorPreview showAlpha:YES];
 	[alert displayWithCompletion: ^void (UIColor *pickedColor){
-      NSString *hexString = [UIColor hexFromColor:pickedColor];
-      hexString = [hexString stringByAppendingFormat:@":%g", pickedColor.alpha];
-      _preferences[[[self specifier] propertyForKey:@"key"]] = hexString;
-      notify_post([[[self specifier] propertyForKey:@"PostNotification"] UTF8String]);
-      [self refreshCellContentsWithSpecifier:[self specifier]];
-    }
-  ];
+    	NSString *hexString = [UIColor hexFromColor:pickedColor];
+    	hexString = [hexString stringByAppendingFormat:@":%g", pickedColor.alpha];
+    	_preferences[[[self specifier] propertyForKey:@"key"]] = hexString;
+    	notify_post([[[self specifier] propertyForKey:@"PostNotification"] UTF8String]);
+    	[self refreshCellContentsWithSpecifier:[self specifier]];
+    }];
 }
 
 #pragma mark - Memory management
