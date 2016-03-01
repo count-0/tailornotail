@@ -34,7 +34,15 @@
 			<key>detail</key>
 			<string>tailsBubbleListController</string>
 		</dict>
-				<dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>label</key>
+			<string>Background Settings</string>
+			<key>detail</key>
+			<string>tailsBackgroundController</string>
+		</dict>
+		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 		</dict>

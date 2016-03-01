@@ -1,9 +1,9 @@
 Package: com.dopeteam.tailornotail
 Name: Tailornotail
-Depends: mobilesubstrate
-Version: 0.0.1
+Depends: mobilesubstrate, ws.hbang.common, com.rpetrich.rocketbootstrap (>= 1.0.2), org.thebigboss.libcolorpicker
+Version: 0.1.0
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
-Maintainer: dopeteam
-Author: dopeteam
+Description: Change your message app to make it yours! Currently still in beta!
+Maintainer: dopeteam <wizagesmax@gmail.com>
+Author: dopeteam <wizagesmax@gmail.com>
 Section: Tweaks

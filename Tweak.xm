@@ -1,48 +1,5 @@
 #import "TNTPreferencesManager.h"
-@interface IMItem : NSObject
-
-@property (nonatomic) long long type;
-@property (nonatomic) long long messageID;
-@property (nonatomic, retain) NSString *unformattedID;
-@property (nonatomic, retain) NSString *service;
-
-@property (nonatomic, retain) NSString *account;
-@property (nonatomic, retain) NSString *accountID;
-@property (nonatomic, retain) NSString *handle;
-@property (nonatomic, retain) NSString *countryCode;
-@property (nonatomic, retain) NSString *guid;
-
-@property (nonatomic, retain) NSString *roomName;
-@property (nonatomic, retain) NSString *sender;
-@property (nonatomic, retain) NSDictionary *senderInfo;
-
-@property (nonatomic, readonly) BOOL isFromMe;
-@property (nonatomic, retain) id context;
-@property (nonatomic, retain) NSDate *time;
-
-@end
-
-@interface NSConcreteAttributedString : NSAttributedString
-- (id)attributesAtIndex:(unsigned int)arg1 effectiveRange:(NSRange *)arg2;
-- (id)string;
-@end
-
-@interface IMChatItem : NSObject
--(IMItem *)_item;
-@end
-
-@interface IMTranscriptChatItem : IMChatItem
-@end
-
-@interface CKTranscriptCollectionView : UIView
--(void)setBackgroundView:(UIView *)arg1;
-@end
-
-@interface CKChatItem : NSObject
-@property (nonatomic, retain) IMTranscriptChatItem *IMChatItem;
-@end
-
-@import Photos;
+#import "BubbleStuff.h"
 
 static bool isSMS;
 static bool fromMoi;
@@ -168,43 +125,5 @@ static NSString *const kTNTReceived = @"received";
 	else
 		return %orig;
 }
-
-%end
-
-%hook CKTranscriptCollectionView
-
--(id) initWithFrame:(CGRect) arg1 collectionViewLayout:(id) arg2
-{
-	//self.backgroundColor = [UIColor blueColor];
-	self = %orig;
-	PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-	fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-	PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
-	PHAsset *lastAsset = [fetchResult lastObject];
-	[[PHImageManager defaultManager] requestImageForAsset:lastAsset
-                                          targetSize:PHImageManagerMaximumSize
-                                         contentMode:PHImageContentModeDefault
-                                             options:0
-                                       resultHandler:^(UIImage *result, NSDictionary *info) {
-
-                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                            UIImageView *test = [[UIImageView alloc] initWithImage:result];
-                                            test.contentMode = UIViewContentModeScaleAspectFill;
-              								[self setBackgroundView:test];
-
-
-                                           });
-                                       }];
-	return self;
-}
-
-/*
--(void)setBackgroundColor:(UIColor *)color
-{
-	color = [UIColor redColor];
-	%orig;
-}
-*/
-
 
 %end

@@ -12,6 +12,10 @@ static NSString *const kTNTBotColorKey = @"BotColor";
 static NSString *const kTNTSenderKey = @"sender";
 static NSString *const kTNTReceivedKey = @"received";
 static NSString *const kTNTFontColorKey = @"FontColor";
+static NSString *const kTNTColorBackgroundKey = @"colorBackground";
+static NSString *const kTNTWallpaperBackgroundKey = @"wallpaperBackground";
+static NSString *const kTNTVariantKey = @"variant";
+static NSString *const kTNTLastPhotoKey = @"lastPhoto";
 
 
 @implementation TNTPreferencesManager {
@@ -35,8 +39,14 @@ static NSString *const kTNTFontColorKey = @"FontColor";
 		[_preferences registerBool:&_enableTails default:YES forKey:kTNTTailsKey];
 		[_preferences registerBool:&_enableiMessageTails default:YES forKey:kTNTTailsiMessageKey];
 		[_preferences registerBool:&_enablesmsTails default:YES forKey:kTNTTailsSMSKey];
-		[_preferences registerBool:&_smsEnable default:YES forKey:kTNTSMSEnableKey];
-		[_preferences registerBool:&_imessageEnable default:YES forKey:kTNTiMessageEnableKey];
+		[_preferences registerBool:&_smsEnable default:NO forKey:kTNTSMSEnableKey];
+		[_preferences registerBool:&_imessageEnable default:NO forKey:kTNTiMessageEnableKey];
+		[_preferences registerBool:&_enableCB default:YES forKey:kTNTColorBackgroundKey];
+		[_preferences registerBool:&_enableWB default:NO forKey:kTNTWallpaperBackgroundKey];
+		[_preferences registerBool:&_enableLB default:NO forKey:kTNTLastPhotoKey];
+
+		//INT preferences
+		[_preferences registerInteger:_variant default:0 forKey:kTNTVariantKey];
 	}
 	return self;
 }
