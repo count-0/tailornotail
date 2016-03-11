@@ -11,7 +11,7 @@
 		<key>detail</key>
 		<string>tailsRootListController</string>
 		<key>icon</key>
-		<string>images/noTNT.png</string>
+		<string>TNTImages/icon.png</string>
 		<key>isController</key>
 		<true/>
 		<key>label</key>

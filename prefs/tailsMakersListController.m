@@ -39,6 +39,6 @@
 -(NSString*)personDescription { return @"Developer"; }
 -(NSString*)name { return @"Wizages"; }
 -(NSString*)twitterHandle { return @"Wizages"; }
--(NSString*)imageName { return @"images/Wizages.png"; }
+-(NSString*)imageName { return @"TNTImages/Wizages.png"; }
 @end
 

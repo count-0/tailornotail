@@ -4,4 +4,5 @@
 @interface tailsRootListController : HBRootListController
 -(void)setupHeader;
 -(void)setupTitle;
+
 @end

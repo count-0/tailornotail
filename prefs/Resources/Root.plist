@@ -11,6 +11,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
+			<key>icon</key>
+			<string>TNTImages/power.png</string>
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
@@ -27,6 +29,8 @@
 			<string>PSGroupCell</string>
 		</dict>
 		<dict>
+			<key>icon</key>
+			<string>TNTImages/chat.png</string>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>label</key>
@@ -35,6 +39,8 @@
 			<string>tailsBubbleListController</string>
 		</dict>
 		<dict>
+			<key>icon</key>
+			<string>TNTImages/BG.png</string>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>label</key>
@@ -47,6 +53,8 @@
 			<string>PSGroupCell</string>
 		</dict>
 		<dict>
+			<key>icon</key>
+			<string>TNTImages/makers.png</string>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>label</key>
@@ -56,7 +64,7 @@
 		</dict>
 		<dict>
 			<key>icon</key>
-			<string>images/showSupportEmailController.png</string>
+			<string>TNTImages/support.png</string>
 			<key>action</key>
 			<string>showSupportEmailController</string>
 			<key>cell</key>
